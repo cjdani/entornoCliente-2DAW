@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibujar Circunferencia</title>
+    <style>
+        canvas {
+            border: 1px solid #000;
+        }
+        form {
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Punto en una Circunferencia</h1>
+    <canvas id="lienzo" width="500" height="500"></canvas>
+    <form id="formularioAngulo">
+        <label for="angulo">Ángulo (0-360):</label>
+        <input type="number" id="angulo" name="angulo" min="0" max="360" required>
+        <button id="botonDibujar" type="button">Dibujar Punto</button><br>
+        <label for="anguloSlider">Mover punto (Ángulo):</label>
+        <input type="range" min="0" max="360" id="anguloSlider">
+    </form>
+
+    <script>
+        
+        const lienzo = document.getElementById("lienzo");
+        const contexto = lienzo.getContext("2d");
+
+        
+        const centroX = lienzo.width / 2;
+        const centroY = lienzo.height / 2;
+        const radio = 150;
+
+        
+        function dibujarCircunferencia() {
+            contexto.beginPath();
+            contexto.arc(centroX, centroY, radio, 0, 2 * Math.PI);
+            contexto.strokeStyle = "black";
+            contexto.lineWidth = 2;
+            contexto.stroke();
+        }
+
+        
+        function dibujarPunto(angulo) {
+            
+            const anguloRadianes = (angulo * Math.PI) / 180;
+
+            
+            const x = centroX + radio * Math.cos(-anguloRadianes); 
+            const y = centroY + radio * Math.sin(-anguloRadianes);
+
+            
+            contexto.beginPath();
+            contexto.arc(x, y, 5, 0, 2 * Math.PI);
+            contexto.fillStyle = "red";
+            contexto.fill();
+        }
+
+        
+        const botonDibujar = document.getElementById("botonDibujar");
+        botonDibujar.addEventListener("click", function() {
+            
+            const angulo = parseFloat(document.getElementById("angulo").value);
+
+            
+            contexto.clearRect(0, 0, lienzo.width, lienzo.height);
+            dibujarCircunferencia();
+
+            
+            dibujarPunto(angulo);
+        });
+
+        const anguloSlider = document.getElementById("anguloSlider");
+        anguloSlider.addEventListener('input', function() {
+            const angulo = parseFloat(anguloSlider.value);
+            
+            
+            contexto.clearRect(0, 0, lienzo.width, lienzo.height);
+            dibujarCircunferencia();
+
+            
+            dibujarPunto(angulo);
+
+            document.getElementById("angulo").value = anguloSlider.value
+        })
+
+        dibujarCircunferencia();
+    </script>
+</body>
+</html>

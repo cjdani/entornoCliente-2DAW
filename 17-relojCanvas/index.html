@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reloj Canvas</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body style="width: 100vw;height: 100vh;">
+    <div style="width: 100%;height: 100%;display: flex;align-items: center;justify-content: center;">
+        <canvas id="canvas" style="height: 500;width: 500;"></canvas>
+    </div>
+    <script>
+
+        //Establecemos el canvas, su contexto y anchura de línea
+        const canvas = document.getElementById("canvas")
+        const ctx = canvas.getContext("2d")
+        ctx.lineWidth = 3;
+
+        //Establecemos el punto central del canvas
+        maxWidth = canvas.width
+        maxHeight = canvas.height
+        zeroX = maxWidth / 2
+        zeroY = maxHeight / 2
+
+        //Intervalo que ejecuta la función que pinta el reloj
+        reloj = setInterval(function() {
+            let date = new Date()
+            dibujarReloj(date.getHours(), date.getMinutes(), date.getSeconds())
+        }, 1000)
+
+        //Convierte de grados a radianes
+        function degreesToRadians(degrees) {
+            return degrees * Math.PI / 180
+        }
+
+        //Dibuja la circunferencia exterior
+        function drawCircle() {
+            let radius = 50
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.arc(zeroX, zeroY, radius, 0, 2 * Math.PI);
+            ctx.stroke()
+        }
+
+        //Borra el lienzo entero y dibuja las agujas
+        function dibujarReloj(horas, minutos, segundos) {
+            ctx.clearRect(0,0,canvas.width, canvas.height)
+
+            let radius = 50
+            let gradosPorHora = 360 / 12;
+            let gradosPorMinuto = 360 / 60;
+            let gradosPorSegundo = 360 / 60;
+
+            //Horas
+            radioHoras = radius - 30
+            xHora = Math.cos(-degreesToRadians(horas * gradosPorHora) + (Math.PI / 2)) * radioHoras
+            yHora = Math.sin(degreesToRadians(horas * gradosPorHora) - (Math.PI / 2)) * radioHoras
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.moveTo(zeroX, zeroY);
+            ctx.lineTo(zeroX + xHora, zeroY + yHora);
+            ctx.stroke();
+
+            //Minutos
+            radioMinutos = radius - 20
+            xMin = Math.cos(-degreesToRadians(minutos * gradosPorMinuto) + (Math.PI / 2)) * radioMinutos
+            yMin = Math.sin(degreesToRadians(minutos * gradosPorMinuto) - (Math.PI / 2)) * radioMinutos
+            ctx.beginPath();
+            ctx.strokeStyle = "black";
+            ctx.moveTo(zeroX, zeroY);
+            ctx.lineTo(zeroX + xMin, zeroY + yMin);
+            ctx.stroke();
+
+            //Segundos
+            radioSegundos = radius - 10
+            xSec = Math.cos(-degreesToRadians(segundos * gradosPorSegundo) + (Math.PI / 2)) * radioSegundos
+            ySec = Math.sin(degreesToRadians(segundos * gradosPorSegundo) - (Math.PI / 2)) * radioSegundos
+            ctx.beginPath();
+            ctx.strokeStyle = "red";
+            ctx.moveTo(zeroX, zeroY);
+            ctx.lineTo(zeroX + xSec, zeroY + ySec);
+            ctx.stroke();
+
+            drawCircle()
+        }
+    </script>
+</body>
+
+</html>

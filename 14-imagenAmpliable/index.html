@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Imagen Ampliable</title>
+    <style>
+        #corcho {
+            position: relative;
+            display: block;
+        }
+
+        #imagen {
+            height: 100%;
+            width: 100%;
+        }
+
+        #pin {
+            z-index: 10;
+            width: 10px;
+            height: 10px;
+            background-color: black;
+            position: absolute;
+            cursor: se-resize;
+        }
+    </style>
+</head>
+<body>
+    <div id="corcho" style="height: 200px;width: 200px;">
+        <img id="imagen" src="media/tux.png" alt="" draggable="false">
+        <div id="pin" draggable="true" style="display: none; top: 200px; left: 200px;"></div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<title>Reloj</title>
+	<style>
+		body {
+			width: 100vw;
+			height: 100vh;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+		}
+
+		#reloj {
+			border: 1px solid black;
+			padding: 5px;
+			margin: 5px;
+			font-size: 35px;
+		}
+
+		button{
+			
+			padding: 5px 10px;
+		}
+	</style>
+</head>
+
+<body>
+	<script>
+		setTimeout(update, 0);
+		let reloj = setInterval(update, 1000);
+
+		function update() {
+			time = new Date();
+
+
+			if (time.getHours() < 10) {
+				document.getElementById("horas").textContent = "0" + time.getHours();
+			} else {
+				document.getElementById("horas").textContent = time.getHours();
+			}
+			if (time.getMinutes() < 10) {
+				document.getElementById("minutos").textContent = "0" + time.getMinutes();
+			} else {
+				document.getElementById("minutos").textContent = time.getMinutes();
+			}
+			if (time.getSeconds() < 10) {
+				document.getElementById("segundos").textContent = "0" + time.getSeconds();
+			} else {
+				document.getElementById("segundos").textContent = time.getSeconds();
+			}
+		}
+
+		function hola(){
+			console.log("hola");
+		}
+	</script>
+	<div id="reloj">
+		<label id="horas"></label><label> : </label>
+		<label id="minutos"></label><label> : </label>
+		<label id="segundos"></label>
+	</div>
+	<button onclick="hola()">Hola</button>
+</body>
+
+</html>

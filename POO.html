@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programación Orientada a Objetos</title>
+    <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+</head>
+
+<body>
+    <h1>Ruedas: </h1>
+    <p id="output-1"></p>
+    <h1>Color de las puertas: </h1>
+    <p id="output-2"></p>
+    <h1>Color de las ruedas: </h1>
+    <p id="output-3"></p>
+    <script>
+
+        function print(array) {
+            let text = '';
+            for (const element of array) {
+                text += ' ' + element
+            }
+            return text;
+        }
+
+        class vehiculo {
+            constructor(ruedas, colores) {
+                this.ruedas = ruedas
+                this.colores = colores
+            }
+
+            pinchar() {
+                let i = 0
+                i = Math.floor(Math.random() * this.ruedas.length)
+                this.ruedas[i] = 'flat'
+            }
+        }
+
+        class ejemploCoche extends vehiculo {
+            constructor(ruedas, puertas, colores) {
+                super(ruedas, colores)
+                this.puertas = puertas
+            }
+
+            pintar(color) {
+                console.log(this.colores)
+                this.colores.forEach((value, key) => {
+                    this.colores.set(key, color)
+                });
+                console.log(this.colores)
+            }
+
+            pintar(color1, color2) {
+                this.colores.set('puertas', color1)
+                this.colores.set('ruedas', color2)
+            }
+        }
+
+        colores = new Map();
+        colores.set('puertas', 'rojo')
+        colores.set('ruedas', 'negro')
+
+        micoche = new ejemploCoche(['bien', 'bien', 'bien', 'bien'], ['p1', 'p2'], colores)
+
+        micoche.pinchar()
+
+        //Pese a tener dos métodos con el mismo nombre pero distintos parámetros en JS siempre se ejecutará la última función declarada
+        micoche.pintar('azul')
+
+        document.getElementById('output-1').textContent = print(micoche.ruedas)
+
+        document.getElementById('output-2').textContent = `${micoche.colores.get('puertas')}`
+
+        document.getElementById('output-3').textContent = `${micoche.colores.get('ruedas')}`
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Factorial</title>
+	<script>
+
+		function calcular() {
+			document.getElementById("output").innerHTML = document.getElementById("number").value + "! = " + f(document.getElementById("number").value);
+		}
+
+		function f(number) {
+			if (number <= 1) {
+				return 1;
+			} else {
+				return number * f(number - 1);
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<label for="number">Factorial de :</label>
+	<input id="number" type="number">
+	<button onclick="calcular()">Calcular</button>
+	<br />
+	<br />
+	<label id="output"></label>
+</body>
+
+</html>

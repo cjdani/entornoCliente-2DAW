@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Factura</title>
+    <script>
+        calculate = () => {
+            for( n = 1; n <= 3; n++){
+                document.getElementById("totalPrice"+n).innerHTML = (document.getElementById("quantity"+n).value*document.getElementById("unitPrice"+n).value*document.getElementById("percentage"+n).value/100) + (document.getElementById("quantity"+n).value*document.getElementById("unitPrice"+n).value)
+            }
+        };
+
+        cleanTotalPrice = () => {
+            for( n = 1; n <= 3; n++){
+                document.getElementById("totalPrice"+n).innerHTML = "";
+            }
+        };
+    </script>
+</head>
+<body>
+    <form method="dialog">
+        <div>
+            <h3>Elemento 1</h3>
+            <label for="quantity1">Cantidad: </label><input type="number" id="quantity1"/><br/>
+            <label for="unitPrice1">Precio unidad: </label><input type="number" id="unitPrice1"/><br/>
+            <label for="percentage1">Porcentaje: </label>
+            <select id="percentage1">
+                <option value="6">6%</option> 
+                <option value="12">12%</option>
+                <option value="18">18%</option>
+            </select><br/>
+            <label>Precio total = </label><label id="totalPrice1"></label>
+        </div>
+        <div>
+            <h3>Elemento 2</h3>
+            <label for="quantity2">Cantidad: </label><input type="number" id="quantity2"/><br/>
+            <label for="unitPrice2">Precio unidad: </label><input type="number" id="unitPrice2"/><br/>
+            <label for="percentage2">Porcentaje: </label>
+            <select id="percentage2">
+                <option value="6">6%</option> 
+                <option value="12">12%</option>
+                <option value="18">18%</option>
+            </select><br/>
+            <label>Precio total = </label><label id="totalPrice2"></label>
+        </div>
+        <div>
+            <h3>Elemento 3</h3>
+            <label for="quantity3">Cantidad: </label><input type="number" id="quantity3"/><br/>
+            <label for="unitPrice3">Precio unidad: </label><input type="number" id="unitPrice3"/><br/>
+            <label for="percentage3">Porcentaje: </label>
+            <select id="percentage3">
+                <option value="6">6%</option> 
+                <option value="12">12%</option>
+                <option value="18">18%</option>
+            </select><br/>
+            <label>Precio total = </label><label id="totalPrice3"></label>
+        </div>
+        <button onclick="calculate()">Calcular</button>
+        <input type="reset" value="Restablecer" onclick="cleanTotalPrice()"/>
+    </form>
+</body>
+</html>

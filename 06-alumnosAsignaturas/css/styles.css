@@ -1,0 +1,23 @@
+#tHead{
+    background-color: rgb(0, 160, 21);
+}
+
+th, td{
+    padding: 5px;
+}
+
+#tBody tr:nth-child(even){
+    background-color: rgb(179, 179, 179);
+}
+
+.media{
+    background-color: rgb(255, 154, 154);
+}
+
+.nota-baja{
+    color: red;
+}
+
+.nota-media{
+    color: yellow;
+}

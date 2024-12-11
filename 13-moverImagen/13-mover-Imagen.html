@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <title>Mover la imagen</title>
+
+    <style>
+        img {
+            height: 200px;
+            z-index: 100;
+        }
+
+        #containers>div {
+            height: 200px;
+            width: 200px;
+            border: 1px solid black;
+            background-color: aqua;
+            display: inline-block;
+            position: absolute;
+            top: 250px;
+        }
+
+        #containers>#rectBox {
+            width: 400px;
+        }
+        #images {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="images">
+        <img src="media/circulo.svg" alt="circulo" id="cir" style="position: absolute;">
+        <img src="media/triangulo.svg" alt="triangulo" id="tri" style="position: absolute;">
+        <img src="media/rectangulo.png" alt="rectangulo" id="rect" style="position: absolute;">
+    </div>
+    <div id="containers">
+        <div id="triBox" class="container" style="left: 0px;top: 250px;">Triángulo</div>
+        <div id="cirBox" class="container" style="left: 200px;top: 250px;">Círculo</div>
+        <div id="rectBox" class="container" style="left: 400px;top: 250px;">Rectángulo</div>
+    </div>
+    <script src="js/script.js"></script>
+</body>
+
+</html>

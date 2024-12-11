@@ -1,0 +1,41 @@
+body{
+    display: flex;
+}
+
+#estanque{
+    width: 74vw;
+    height: 100vh;
+    /*background-image: url("../media/pond.png");
+    background-repeat: no-repeat;
+    background-size: cover*/;
+}
+
+#rana{
+    position: absolute;
+}
+
+aside{
+    width: 25vw;
+    height: 100vh;
+    background-color: greenyellow;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+aside>div{
+    width: 20vw;
+    height: 25vh;
+    background-color: lightskyblue;
+    padding: 20px;
+    border-radius: 15px;
+    margin: 20px auto;
+}
+
+#marcadorActual{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}

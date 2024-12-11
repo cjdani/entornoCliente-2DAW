@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Creación de una tabla dinámicamente</title>
+    <style>
+        form {
+            width: 80vw;
+            margin: 20px auto 0px;
+        }
+
+        #procButton {
+            margin: 20px 10vw;
+        }
+
+        fieldset {
+            display: flex;
+            flex-direction: column;
+        }
+
+        fieldset>input {
+            margin-bottom: 10px;
+        }
+
+        fieldset>label {
+            margin-top: 10px;
+        }
+
+        #divButtons > input {
+            padding: 10px 15px;
+            margin: 0px 15px 0px 0px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background-color: #DDD;
+        }
+
+        th, td {
+            border: 1px solid black;
+        }
+
+        tbody>tr:hover {
+            background-color: #DDD;
+        }
+    </style>
+</head>
+
+<body>
+
+    <script>
+        const body = document.querySelector("body")
+
+        var contactos = []
+
+        function insertContact() {
+            let name;
+            let surnames;
+            let number;
+            for (const fieldset of body.children[1].children) {
+                if (fieldset.nodeName == "FIELDSET") {
+                    for (const child of fieldset.children) {
+                        if (child.getAttribute("id") == "name") {
+                            name = child.value
+                            child.value = ""
+                        } else if (child.id == "surnames") {
+                            surnames = child.value
+                            child.value = ""
+                        } else if (child.id == "number") {
+                            number = child.value
+                            child.value = ""
+                        }
+                    }
+                }
+            }
+            contactos.push([name, surnames, parseInt(number)])
+            console.log(contactos)
+        }
+
+        function startSite() {
+            body.children = []
+            form = document.createElement("form")
+            form.setAttribute("action", "#")
+            form.setAttribute("method", "dialog")
+
+            fs = document.createElement("fieldset")
+            leg = document.createElement("legend")
+            leg.textContent = "Datos del contacto"
+            fs.appendChild(leg)
+            la1 = document.createElement("label")
+            la1.setAttribute("for", "name")
+            la1.textContent = "Nombre:"
+            fs.appendChild(la1)
+            inp1 = document.createElement("input")
+            inp1.setAttribute("type", "text")
+            inp1.setAttribute("id", "name")
+            fs.appendChild(inp1)
+            la2 = document.createElement("label")
+            la2.setAttribute("for", "surnames")
+            la2.textContent = "Apellidos:"
+            fs.appendChild(la2)
+            inp2 = document.createElement("input")
+            inp2.setAttribute("type", "text")
+            inp2.setAttribute("id", "surnames")
+            fs.appendChild(inp2)
+            la3 = document.createElement("label")
+            la3.setAttribute("for", "number")
+            la3.textContent = "Teléfono:"
+            fs.appendChild(la3)
+            inp3 = document.createElement("input")
+            inp3.setAttribute("type", "number")
+            inp3.setAttribute("id", "number")
+            fs.appendChild(inp3)
+
+            divButtons = document.createElement("div")
+            divButtons.setAttribute("id", "divButtons")
+
+            subm = document.createElement("input")
+            subm.setAttribute("type", "submit")
+            subm.setAttribute("value", "Insertar")
+            subm.addEventListener("click", insertContact)
+
+            divButtons.appendChild(subm)
+
+            res = document.createElement("input")
+            res.setAttribute("type", "reset")
+            res.setAttribute("value", "Borrar")
+
+            divButtons.appendChild(res)
+
+            fs.appendChild(divButtons)
+
+            form.appendChild(fs)
+
+            body.appendChild(form)
+
+            proc = document.createElement("button")
+            proc.textContent = "Procesar"
+            proc.setAttribute("id", "procButton")
+            proc.addEventListener("click", createTable)
+            body.appendChild(proc)
+        }
+
+        function createTable() {
+            // Borra cualquier tabla existente
+            for (const child of body.children) {
+                if (child.nodeName == "TABLE") {
+                    child.remove()
+                }
+            }
+            // Creación de una tabla nueva
+            let tabla = document.createElement("table")
+            tHead = document.createElement("thead")
+            tr = document.createElement("tr")
+            th1 = document.createElement("th")
+            th2 = document.createElement("th")
+            th3 = document.createElement("th")
+            th1.textContent = "Nombre"
+            th2.textContent = "Apellidos"
+            th3.textContent = "Número"
+            tr.appendChild(th1)
+            tr.appendChild(th2)
+            tr.appendChild(th3)
+            tHead.appendChild(tr)
+            tabla.appendChild(tHead)
+            let tBody = document.createElement("tbody")
+            for (const contact of contactos) {
+                let fila = document.createElement("tr")
+                for (let i = 0; i < contact.length; i++) {
+                    const data = contact[i];
+                    console.log(data)
+                    let celda = document.createElement("td")
+                    celda.textContent = data
+                    fila.appendChild(celda)
+                }
+                tBody.appendChild(fila)
+            }
+            tabla.appendChild(tBody)
+            body.appendChild(tabla)
+        }
+
+        document.addEventListener("load", startSite())
+    </script>
+</body>
+
+</html>

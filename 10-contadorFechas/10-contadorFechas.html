@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Diferencia de Fechas</title>
+    <style>
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-color: #000;
+        }
+
+        p {
+            color: white;
+            font-size: 30px;
+            font-style: italic;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+
+<body>
+    <p id="timeOutput"></p>
+    <script>
+
+        const SEG = 1000, 
+            MIN = SEG * 60, 
+            HOUR = MIN * 60, 
+            DAY = HOUR * 24;
+
+        date1 = new Date();
+        date2 = new Date("2025-03-01T00:00:00");
+
+
+
+        time2 = Date.parse(date2);
+        time1 = Date.parse(date1);
+
+        if (time1 >= time2) {
+            dif = 0;
+        } else {
+            dif = time2 - time1;
+        }
+
+        days = Math.floor(dif / DAY);
+        hours = Math.floor((dif % DAY) / HOUR);
+        minutes = Math.floor((dif % HOUR) / MIN);
+        seconds = Math.floor((dif % MIN) / SEG);
+
+        reloj = [days, hours, minutes, seconds];
+
+        function time() {
+            if (reloj[3] == 0) {
+                if (reloj[2] == 0) {
+                    if (reloj[1] == 0) {
+                        if (reloj[0] == 0) {
+                            end();
+                        } else {
+                            reloj[0] -= 1;
+                            reloj[1] = 23;
+                            reloj[2] = 59;
+                            reloj[3] = 59;
+                        }
+                    } else {
+                        reloj[1] -= 1;
+                        reloj[2] = 59;
+                        reloj[3] = 59;
+                    }
+                } else {
+                    reloj[2] -= 1;
+                    reloj[3] = 59;
+                }
+            } else {
+                reloj[3] -= 1;
+            }
+            write();
+        }
+
+        function write() {
+            let dias = reloj[0];
+            let horas;
+            let minutos;
+            let segundos;
+
+            if (reloj[1] < 10) {
+                horas = (reloj[1].toString()).padStart(2, "0");
+            } else {
+                horas = reloj[1];
+            }
+            if (reloj[2] < 10) {
+                minutos = (reloj[2].toString()).padStart(2, "0");
+            } else {
+                minutos = reloj[2];
+            }
+            if (reloj[3] < 10) {
+                segundos = (reloj[3].toString()).padStart(2, "0");
+            } else {
+                segundos = reloj[3];
+            }
+            document.getElementById("timeOutput").innerText = dias + " D " + horas + " H " + minutos + " M " + segundos + " S";
+        }
+
+        function end() {
+            clearInterval(temporizador);
+        }
+
+        temporizador = setInterval(time, 1000);
+    </script>
+</body>
+
+</html>

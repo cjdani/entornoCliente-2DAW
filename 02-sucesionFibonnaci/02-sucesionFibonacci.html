@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sucesión de Fibonacci</title>
+    <script>
+        function resolveRecursive(){
+            document.getElementById("outputRecursive").innerHTML = "fib("+document.getElementById("numberRecursive").value+") = "+ fibonacciRecursive(document.getElementById("numberRecursive").value);
+        }
+
+        function fibonacciRecursive(number){
+            if(number<= 1){
+                console.log(number);
+                return number;
+            }else{
+                console.log(number);
+                return fibonacciRecursive(number-1) + fibonacciRecursive(number-2)
+            }
+        }
+
+        function resolve(){
+            document.getElementById("output").innerHTML = "0, 1";
+            var limit = document.getElementById("limit").value;
+            var previous = 0;
+            var actual = 1;
+            while (actual <  limit){
+                let aux = previous + actual;
+                previous = actual;
+                actual = aux;
+                document.getElementById("output").innerHTML += ", "+actual;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h3>Sucesión de Fibonacci recursivamente</h3>
+    <label for="numberRecursive">Fibonacci de: </label>
+    <input id="numberRecursive" type="number"/>
+    <button id="resolveRecursive" onclick="resolveRecursive()">Calcular</button>
+    <br/>
+    <br/>
+    <label id="outputRecursive">fib(n) = </label>
+    
+    <h3>Sucesión de Fibonacci iterativamente</h3>
+    <label for="limit">Límite: </label>
+    <input id="limit" type="number"/>
+    <button id="resolveRecursive" onclick="resolve()">Calcular</button>
+    <br/>
+    <br/>
+    <label id="output"></label>
+</body>
+</html>
