@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CCAA y Provincias</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            display: flex;
+            justify-content: space-around;
+        }
+
+        #divCCAA {
+            margin: 20px;
+        }
+
+        #divCCAA * {
+            margin: 5px 10px;
+        }
+
+        #divProv {
+            border: 1px solid black;
+            border-radius: 6px;
+            margin: 20px;
+            padding: 5px 10px;
+        }
+
+        #divProv * {
+            margin: 5px 10px;
+        }
+    </style>
+</head>
+
+<body id="body">
+    <script>
+        const body = document.getElementById("body")
+
+        function makeXHR() {
+            xhr = new XMLHttpRequest()
+            xhr.open('GET', 'CCAA.xml')
+            xhr.onload = function (e) {
+                if (xhr.status == 200) {
+                    let xmlDoc = xhr.responseXML
+                    comunidades = xmlDoc.getElementsByTagName('comunidades')[0].children
+                    drawCCAA(comunidades)
+                    drawProvinces()
+                } else {
+                    xhr.onerror()
+                }
+            }
+            xhr.onerror = function (e) {
+                console.log("Código de error: " + xhr.status)
+            }
+            xhr.send()
+        }
+
+        async function doAjaxThings() {
+            let result = await makeXHR()
+        }
+
+        async function drawProvinces() {
+            try {
+                response = await fetch('provincias.json')
+                provincias = await response.json()
+            } catch (error) {
+                console.log(error)
+            }
+
+            if (document.getElementById('divProv') != null) {
+                document.getElementById('divProv').remove()
+            }
+            divProv = document.createElement('div')
+            divProv.setAttribute('id', 'divProv')
+            selectedCA = document.querySelector('input[name="ca"]:checked').value
+            for (const Prov of provincias) {
+                if (Prov.cAutonoma == selectedCA) {
+                    provP = document.createElement('p')
+                    provP.textContent = Prov.nombre
+                    divProv.appendChild(provP)
+                }
+            }
+            body.appendChild(divProv)
+        }
+
+        function drawCCAA(comunidades) {
+            divCCAA = document.createElement('div')
+            divCCAA.setAttribute('id', 'divCCAA')
+            for (const CA of comunidades) {
+                caId = CA.getAttribute('id')
+                caName = CA.textContent
+                caRButton = document.createElement('input')
+                caRButton.setAttribute('type', 'radio')
+                caRButton.setAttribute('name', 'ca')
+                caRButton.setAttribute('id', `ca${caId}RButton`)
+                caRButton.setAttribute('value', caId)
+                caRButton.setAttribute('onclick', "drawProvinces()")
+                if (caId == 1) {
+                    caRButton.setAttribute('checked', 'true')
+                }
+                divCCAA.appendChild(caRButton)
+
+                caLabel = document.createElement('label')
+                caLabel.textContent = caName
+                caLabel.setAttribute('for', 'ca${caId}RButton')
+                divCCAA.appendChild(caLabel)
+
+                divCCAA.appendChild(document.createElement('br'))
+            };
+            body.appendChild(divCCAA)
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            doAjaxThings();
+        })
+    </script>
+</body>
+
+</html>

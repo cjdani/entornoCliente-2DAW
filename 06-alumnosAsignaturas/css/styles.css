@@ -6,6 +6,10 @@ th, td{
     padding: 5px;
 }
 
+#tBody {
+    background-color: #DDD;
+}
+
 #tBody tr:nth-child(even){
     background-color: rgb(179, 179, 179);
 }

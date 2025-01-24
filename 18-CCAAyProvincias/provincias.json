@@ -1,0 +1,38 @@
+[
+    {
+        "nombre": "A Coruña",
+        "cAutonoma": 1
+    },
+    {
+        "nombre": "Lugo",
+        "cAutonoma": 1
+    },
+    {
+        "nombre": "Pontevedra",
+        "cAutonoma": 1
+    },
+    {
+        "nombre": "Ourense",
+        "cAutonoma": 1
+    },
+    {
+        "nombre": "Cáceres",
+        "cAutonoma": 2
+    },
+    {
+        "nombre": "Badajoz",
+        "cAutonoma": 2
+    },
+    {
+        "nombre": "Castellón",
+        "cAutonoma": 3
+    },
+    {
+        "nombre": "Valencia",
+        "cAutonoma": 3
+    },
+    {
+        "nombre": "Alicante",
+        "cAutonoma": 3
+    }
+]
