@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Casino de Vigo</title>
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+        }
+
+        body {
+            width: 100vw;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        table {
+            background-color: black;
+            margin: 50px;
+        }
+
+        th,
+        td {
+            background-color: white;
+            padding: 8px 16px;
+        }
+
+        #check-btn {
+            padding: 8px 16px;
+            background-color: lightskyblue;
+            border: 1px solid black;
+        }
+
+        #check-btn:hover {
+            background-color: rgb(104, 197, 255);
+        }
+    </style>
+</head>
+
+<body id="body">
+    <table>
+        <thead>
+            <tr>
+                <th>0</th>
+                <th>1</th>
+                <th>2</th>
+                <th>3</th>
+                <th>4</th>
+                <th>5</th>
+                <th>6</th>
+                <th>Intentos</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td id="td-0">0</td>
+                <td id="td-1">0</td>
+                <td id="td-2">0</td>
+                <td id="td-3">0</td>
+                <td id="td-4">0</td>
+                <td id="td-5">0</td>
+                <td id="td-6">0</td>
+                <td id="td-7">-</td>
+            </tr>
+        </tbody>
+    </table>
+    <button id="check-btn" onclick="startLoop()">Start</button>
+    <script>
+
+        const body = document.getElementById('body')
+
+        numbers = []
+
+        arrayAciertos = [0, 0, 0, 0, 0, 0, 0, 0]
+
+        async function doAjaxThings() {
+            await fetchNumbers()
+        }
+
+        async function fetchNumbers() {
+            numbers = await fetch('azar.json')
+                .then((result) => { return result.json() })
+                .catch((error) => { console.log('Error: ' + error); errorPosts = error })
+            console.log('Array: ' + numbers)
+        }
+
+        function draw() {
+            for (let i = 0; i < arrayAciertos.length; i++) {
+                element = document.getElementById(`td-${i}`)
+                element.textContent = arrayAciertos[i].toLocaleString('es-ES')
+            }
+            arrayAciertos = [0, 0, 0, 0, 0, 0, 0, 0]
+        }
+
+        function doLoop() {
+            return new Promise((resolve, reject) => {
+                try {
+                    do {
+                        check()
+                    } while (arrayAciertos[6] < 1);
+                    resolve()
+                } catch (error) {
+                    reject(error)
+                }
+
+            })
+        }
+
+        function startLoop() {
+            doLoop().then((result) => { draw() }).catch((error) => {alert(error)})
+        }
+
+        function check() {
+            let matches = 0
+            let random = generateArray()
+            for (let i = 0; i < 6; i++) {
+                if (numbers.includes(random[i])) {
+                    matches++
+                }
+            }
+            arrayAciertos[matches]++
+            arrayAciertos[7]++
+        }
+
+        function generateArray() {
+            let newarray = []
+            for (let i = 0; i < 6; i++) {
+                do {
+                    number = getRandomInt(50)
+                } while (newarray.includes(number));
+                newarray.push(number)
+            }
+            return newarray
+        }
+
+        function getRandomInt(max) {
+            return Math.floor(Math.random() * max)
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            doAjaxThings()
+        })
+    </script>
+</body>
+
+</html>
