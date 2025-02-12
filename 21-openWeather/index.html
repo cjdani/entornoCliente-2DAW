@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consumir API openWeather</title>
+    <style>
+        #fatherDiv {
+            width: 60vw;
+            margin: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        #dataDiv {
+            width: 80%;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body id="body">
+    <div id="fatherDiv">
+        <h1>OpenWatherMap API</h1>
+        <div>
+            <label for="city">Ciudad: </label>
+            <input type="text" name="city" id="city">
+            <button onclick="showData()">Comprobar</button>
+        </div>
+        <div id="dataDiv">
+            <div id="canvas">
+    
+            </div>
+            <div id="img_div">
+                
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const body = document.getElementById('body')
+        const canvas = document.getElementById('canvas')
+        const img_div = document.getElementById('img_div')
+        const token = '8dcc35d09acfa33bac870b7cf523081a'
+
+        async function doAjaxThings() {
+
+        }
+
+        async function fetchData() {
+            ciudad = document.getElementById('city').value
+            const url = `http://api.openweathermap.org/data/2.5/weather?q=${ciudad}&appid=${token}&lang=es&units=metric`
+
+            json = await fetch(url)
+            return await json.json()
+        }
+
+        function drawData(data) {
+            canvas.innerHTML = ''
+            img_div.innerHTML = ''
+            temp = newElement('p', `Temperatura: ${data['main']['temp']} ºC`, canvas)
+            desc = newElement('p', `Descripción: ${data['weather'][0]['description']}`, canvas)
+            hum = newElement('p', `Humedad: ${data['main']['humidity']} %`, canvas)
+            wind = newElement('p', `Viento: ${data['wind']['speed']} m/s`, canvas)
+            img = newElement('img', null, img_div)
+            img.setAttribute('src', `http://openweathermap.org/img/wn/${data['weather'][0]['icon']}@2x.png`)
+        }
+
+        async function showData() {
+            drawData(await fetchData())
+        }
+
+        function newElement(type, text = null, parent = null) {
+            let e = document.createElement(type)
+            if (text != null) {
+                e.textContent = text
+            }
+            if (parent != null) {
+                parent.appendChild(e)
+            }
+            return e
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            doAjaxThings()
+        })
+    </script>
+</body>
+
+</html>
